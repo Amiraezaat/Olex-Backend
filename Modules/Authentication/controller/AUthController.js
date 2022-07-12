@@ -1,3 +1,4 @@
+require("dotenv").config()
 const { StatusCodes } = require('http-status-codes')
 const userModel = require('../../../DB/Models/User')
 const jwt = require('jsonwebtoken')
@@ -6,34 +7,36 @@ const { catch_Error } = require('../../../Utils/CatchError')
 const bcrypt = require('bcrypt')
 const Qr_code = require('../../../Services/QR_Code')
 
-//---------Sign up API -----------
+//---------Sign up API ----------------
 exports.SignUp = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body
-    const findUser = await userModel.findOne({ email })
-    if (findUser) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        message: 'email is already exist'
-      })
-    } else {
-      const newuser = new userModel({ firstName, lastName, email, password })
-      const saveduser = await newuser.save()
-      const token = jwt.sign(
-        {
-          _id: saveduser._id,
-          email: saveduser.email,
-          role: saveduser.role
-        },
-        process.env.Tokenkey
-      )
-      console.log(token)
+    console.log("kkkkkkkkkkkkkkkkkkkk")
+    // const { firstName, lastName, email, password } = req.body
+    // const findUser = await userModel.findOne({ email })
+    // if (findUser) {
+    //   res.status(StatusCodes.BAD_REQUEST).json({
+    //     message: 'email is already exist'
+    //   })
+    // } else {
+    //   console.log(process.env.Tokenkey);
+    //   const newuser = new userModel({ firstName, lastName, email, password })
+    //   const saveduser = await newuser.save()
+    //   const token = jwt.sign(
+    //     {
+    //       _id: saveduser._id,
+    //       email: saveduser.email,
+    //       role: saveduser.role
+    //     },
+    //     process.env.Tokenkey
+    //   )
+    //   console.log(token)
     //   const message = `<div>
     //     <a href='https://olexbackend.herokuapp.com/confirmemail/${token}'>click here to confirm your email </a>
     // </div>`
     //   console.log({message , email});
     //   sendEmail(email, message)
-      res.status(StatusCodes.CREATED).json({ message: 'Added Done' })
-    }
+    //   res.status(StatusCodes.CREATED).json({ message: 'Added Done' })
+    // }
   } catch (error) {
     catch_Error(res, error)
   }

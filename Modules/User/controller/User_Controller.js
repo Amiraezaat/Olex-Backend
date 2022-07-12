@@ -61,7 +61,7 @@ exports.Update_profile = async (req, res) => {
         process.env.Tokenkey
       )
       const message = `<div>
-          <a href='http://localhost:3000/confirmemail/${token}'>click here to confirm your email </a>
+          <a href='https://olexbackend.herokuapp.com/confirmemail/${token}'>click here to confirm your email </a>
       </div>`
       sendEmail(new_email, message)
       res.status(StatusCodes.OK).json({

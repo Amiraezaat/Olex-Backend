@@ -1,0 +1,6 @@
+to run the project:
+1- open cmd in project path
+2- run command code .
+3- run command npm i 
+4- if you had install nodemon globally before => run command nodemon , 
+if not => run command npm start

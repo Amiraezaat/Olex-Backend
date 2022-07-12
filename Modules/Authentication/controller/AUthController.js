@@ -11,32 +11,32 @@ const Qr_code = require('../../../Services/QR_Code')
 exports.SignUp = async (req, res) => {
   try {
     console.log("kkkkkkkkkkkkkkkkkkkk")
-    // const { firstName, lastName, email, password } = req.body
-    // const findUser = await userModel.findOne({ email })
-    // if (findUser) {
-    //   res.status(StatusCodes.BAD_REQUEST).json({
-    //     message: 'email is already exist'
-    //   })
-    // } else {
-    //   console.log(process.env.Tokenkey);
-    //   const newuser = new userModel({ firstName, lastName, email, password })
-    //   const saveduser = await newuser.save()
-    //   const token = jwt.sign(
-    //     {
-    //       _id: saveduser._id,
-    //       email: saveduser.email,
-    //       role: saveduser.role
-    //     },
-    //     process.env.Tokenkey
-    //   )
-    //   console.log(token)
-    //   const message = `<div>
-    //     <a href='https://olexbackend.herokuapp.com/confirmemail/${token}'>click here to confirm your email </a>
-    // </div>`
-    //   console.log({message , email});
-    //   sendEmail(email, message)
-    //   res.status(StatusCodes.CREATED).json({ message: 'Added Done' })
-    // }
+    const { firstName, lastName, email, password } = req.body
+    const findUser = await userModel.findOne({ email })
+    if (findUser) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: 'email is already exist'
+      })
+    } else {
+      console.log(process.env.Tokenkey);
+      const newuser = new userModel({ firstName, lastName, email, password })
+      const saveduser = await newuser.save()
+      const token = jwt.sign(
+        {
+          _id: saveduser._id,
+          email: saveduser.email,
+          role: saveduser.role
+        },
+        process.env.Tokenkey
+      )
+      console.log(token)
+      const message = `<div>
+        <a href='https://olexbackend.herokuapp.com/confirmemail/${token}'>click here to confirm your email </a>
+    </div>`
+      console.log({message , email});
+      sendEmail(email, message)
+      res.status(StatusCodes.CREATED).json({ message: 'Added Done' })
+    }
   } catch (error) {
     catch_Error(res, error)
   }

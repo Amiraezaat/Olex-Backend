@@ -1,5 +1,4 @@
 const { StatusCodes } = require('http-status-codes')
- 
 const userModel = require('../../../DB/Models/User')
 const jwt = require('jsonwebtoken')
 const sendEmail = require('../../../Services/SendEmail')
@@ -28,11 +27,11 @@ exports.SignUp = async (req, res) => {
         process.env.Tokenkey
       )
       console.log(token)
-      const message = `<div>
-        <a href='http://localhost:3000/confirmemail/${token}'>click here to confirm your email </a>
-    </div>`
-      // console.log(message , email);
-      sendEmail(email, message)
+    //   const message = `<div>
+    //     <a href='https://olexbackend.herokuapp.com/confirmemail/${token}'>click here to confirm your email </a>
+    // </div>`
+    //   console.log({message , email});
+    //   sendEmail(email, message)
       res.status(StatusCodes.CREATED).json({ message: 'Added Done' })
     }
   } catch (error) {

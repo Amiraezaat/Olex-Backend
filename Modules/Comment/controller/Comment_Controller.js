@@ -60,8 +60,7 @@ exports.Update_Comment = async (req, res) => {
       { new: true }
     )
     if (modified) {
-      getIo()
-      .emit(socketEvents.updateComment, [modified])
+      getIo().emit(socketEvents.updateComment, [modified])
       res.status(StatusCodes.CREATED).json({ message: 'Comment Updates Done' })
     } else {
       res
@@ -77,14 +76,33 @@ exports.Update_Comment = async (req, res) => {
 exports.deleteComent = async (req, res) => {
   try {
     if (req.user.role == 'Admin') {
-      await CommModel.findOneAndRemove({ _id: req.body._id })
+      await productModel.findOneAndUpdate(
+        { _id: comment.Product_id },
+        {
+          $pull: {
+            Comments: comment._id
+          }
+        },
+        { new: true }
+      )
+      await CommModel.deleteOne({ _id: req.body._id })
       res.status(StatusCodes.OK).json({ message: 'Deleted Done by admin' })
     } else if (req.user.role == 'User') {
-      const comment = await CommModel.findOneAndRemove({
+      const comment = await CommModel.findOne({
         _id: req.body._id,
         comment_By: req.user._id
       })
       if (comment) {
+        await productModel.findOneAndUpdate(
+          { _id: comment.Product_id },
+          {
+            $pull: {
+              Comments: comment._id
+            }
+          },
+          { new: true }
+        )
+        await CommModel.deleteOne({ _id: req.body._id })
         res.status(StatusCodes.OK).json({ message: 'Deleted Done' })
       } else {
         res

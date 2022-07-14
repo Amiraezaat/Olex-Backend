@@ -10,7 +10,7 @@ const Qr_code = require('../../../Services/QR_Code')
 //---------Sign up API ----------------
 exports.SignUp = async (req, res) => {
   try {
-    console.log("kkkkkkkkkkkkkkkkkkkk")
+    // log("kkkkkkkkkkkkkkkkkkkk")
     const { firstName, lastName, email, password } = req.body
     const findUser = await userModel.findOne({ email })
     if (findUser) {
@@ -31,7 +31,7 @@ exports.SignUp = async (req, res) => {
       )
       console.log(token)
       const message = `<div>
-        <a href='https://olexbackend.herokuapp.com/confirmemail/${token}'>click here to confirm your email </a>
+        <a href='${req.protocol}://${req.headers.host}/confirmemail/${token}'>click here to confirm your email </a>
     </div>`
       console.log({message , email});
       sendEmail(email, message)

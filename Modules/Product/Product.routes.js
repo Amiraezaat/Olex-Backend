@@ -60,6 +60,10 @@ router.patch(
   Add_to_wishlist
 )
 
-
-router.patch("/product/like/:_id" , auth(endPoint.Like_Product) , validation(LikeProductValidator) , likeProduct)
+router.patch(
+  '/product/like/:_id',
+  auth(endPoint.Like_Product),
+  validation(LikeProductValidator),
+  likeProduct
+)
 module.exports = router
